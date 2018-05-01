@@ -21,13 +21,14 @@ class JobboleSpider(scrapy.Spider):
             # 将控制权交给Scrapy的Request根据帖子的url进行下载
             # 回调函数callback后面跟的是进入页面后，进行处理的函数
             # Request中meta参数的作用是传递信息给下一个函数（这里就是回调parse_detail）
+            # urljoin是为了避免链接没有带域名，自动加上域名，如果有则不会拼接
             yield Request(url=parse.urljoin(response.url, post_url), meta={"front_image_url": image_url},
                           callback=self.parse_detail)
 
         #提取下一页并交给scrapy进行下载
         next_url = response.css(".next.page-numbers::attr(href)").extract_first("")
         if next_url:#如果有下一页那么就递归调用
-            yield Request(url=parse.urljoin(response.url, post_url), callback=self.parse)
+            yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
 
     def parse_detail(self, response):
         # 这个页面已经进入每个帖子详情页了
