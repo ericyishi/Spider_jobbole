@@ -6,9 +6,11 @@
   1. item
   2. itemLoader
   3. pipelines
-* mysqlclient
+* mysqlclient(pymysql也可以)
 * Twisted异步
   1. adbapi创建连接池，避免阻塞
+### 运行环境
+需要搭建Scrapy框架以及数据库模块
 ### 结果
 ![image](https://github.com/ericyishi/img-folder/blob/master/spider/jobbole/captureForDB.png)
 
